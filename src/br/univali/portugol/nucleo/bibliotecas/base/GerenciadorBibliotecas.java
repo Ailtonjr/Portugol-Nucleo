@@ -10,6 +10,7 @@ import br.univali.portugol.nucleo.bibliotecas.base.anotacoes.DocumentacaoFuncao;
 import br.univali.portugol.nucleo.bibliotecas.base.anotacoes.DocumentacaoParametro;
 import br.univali.portugol.nucleo.bibliotecas.base.anotacoes.NaoExportar;
 import br.univali.portugol.nucleo.bibliotecas.base.anotacoes.PropriedadesBiblioteca;
+import br.univali.portugol.nucleo.execucao.Interpretador;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -85,6 +86,7 @@ public final class GerenciadorBibliotecas
             bibliotecasDisponiveis.add("Matematica");
             bibliotecasDisponiveis.add("Teclado");
             bibliotecasDisponiveis.add("Texto");
+            bibliotecasDisponiveis.add("Threads");
             bibliotecasDisponiveis.add("Tipos");
             bibliotecasDisponiveis.add("Mouse");
             bibliotecasDisponiveis.add("Arquivos");
@@ -150,7 +152,20 @@ public final class GerenciadorBibliotecas
      * @return
      * @throws ErroCarregamentoBiblioteca 
      */
-    public Biblioteca registrarBiblioteca(String nome, Programa programa) throws ErroCarregamentoBiblioteca
+    public Biblioteca registrarBiblioteca(String nome, Programa programa) throws ErroCarregamentoBiblioteca{
+        return registrarBiblioteca(nome, programa, null);
+    }
+    /**
+     * Obtém a biblioteca especificada, carregando-a se necessário. Este método é responsável
+     * por gerenciar o ciclo de vida da biblioteca em memória.
+     * 
+     * @param nome  o nome da biblioteca a ser obtida
+     * @param programa  
+     * @param interpretador  
+     * @return
+     * @throws ErroCarregamentoBiblioteca 
+     */
+    public Biblioteca registrarBiblioteca(String nome, Programa programa, Interpretador interpretador) throws ErroCarregamentoBiblioteca
     {
         try
         {
@@ -180,7 +195,13 @@ public final class GerenciadorBibliotecas
                 if (!memoriaPrograma.containsKey(nome))
                 {
                     Biblioteca biblioteca = bibliotecasCarregadas.get(nome).newInstance();
-                    biblioteca.inicializar(programa, new ArrayList<>(memoriaPrograma.values()));
+                    
+                    if(interpretador!= null){
+                        System.out.println("olarrrrrr");
+                        biblioteca.inicializar(programa, interpretador, new ArrayList<>(memoriaPrograma.values()));
+                    }else{
+                        biblioteca.inicializar(programa, new ArrayList<>(memoriaPrograma.values()));
+                    }
                     
                     for (Biblioteca bib : memoriaPrograma.values())
                     {

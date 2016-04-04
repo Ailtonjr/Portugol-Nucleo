@@ -8,6 +8,7 @@ import br.univali.portugol.nucleo.bibliotecas.base.anotacoes.DocumentacaoBibliot
 import br.univali.portugol.nucleo.bibliotecas.base.anotacoes.DocumentacaoConstante;
 import br.univali.portugol.nucleo.bibliotecas.base.anotacoes.DocumentacaoFuncao;
 import br.univali.portugol.nucleo.bibliotecas.base.anotacoes.PropriedadesBiblioteca;
+import br.univali.portugol.nucleo.execucao.Interpretador;
 import br.univali.portugol.nucleo.execucao.erros.ErroExecucaoNaoTratado;
 import br.univali.portugol.nucleo.mensagens.ErroExecucao;
 import java.lang.reflect.Field;
@@ -267,6 +268,30 @@ public abstract class Biblioteca
      * @see TipoBiblioteca
      */
     protected void inicializar(Programa programa, List<Biblioteca> bibliotecasReservadas) throws ErroExecucaoBiblioteca
+    {
+
+    }
+    
+       /**
+     * Este método será chamado automaticamente para inicializar as bibliotecas
+     * do tipo {@link TipoBiblioteca#RESERVADA}. O método será chamado no início
+     * da execução de cada {@link Programa}
+     *
+     * @param programa o programa no qual a biblioteca está registrada e
+     * executando
+     * @param interpretador o interpretador do programa em questão
+     *
+     * @param bibliotecasReservadas a lista das bibliotecas reservadas que foram
+     * incluídas no programa antes da inlusão desta biblioteca. Para obter as
+     * demais bibliotecas, o método {@link Biblioteca#bibliotecaRegistrada(Biblioteca)
+     * }
+     * deve ser sobrescrito.
+     *
+     * @throws ErroExecucaoBiblioteca
+     *
+     * @see TipoBiblioteca
+     */
+    protected void inicializar(Programa programa, Interpretador interpretador, List<Biblioteca> bibliotecasReservadas) throws ErroExecucaoBiblioteca
     {
 
     }

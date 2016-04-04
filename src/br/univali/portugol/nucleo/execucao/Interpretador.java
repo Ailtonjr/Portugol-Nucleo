@@ -131,6 +131,11 @@ public abstract class Interpretador implements VisitanteASA
         }
     }
 
+    public Memoria getMemoria()
+    {
+        return memoria;
+    }
+    
     private boolean funcaoInicialValida(Funcao funcaoPrincipal)
     {
         boolean possuiParametros = !funcaoPrincipal.getParametros().isEmpty();
@@ -1237,7 +1242,7 @@ public abstract class Interpretador implements VisitanteASA
         try
         {
             String nome = noInclusaoBiblioteca.getNome();
-            Biblioteca biblioteca = GerenciadorBibliotecas.getInstance().registrarBiblioteca(nome, this.programa);
+            Biblioteca biblioteca = GerenciadorBibliotecas.getInstance().registrarBiblioteca(nome, this.programa, this);
 
             bibliotecas.put(nome, biblioteca);
 
